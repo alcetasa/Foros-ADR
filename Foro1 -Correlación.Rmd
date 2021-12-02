@@ -1,0 +1,49 @@
+---
+title: "FOROS- ANÁLISIS DE REGRESIÓN"
+author: "Alvaro Cesar Tauma Salvador - Aron Salvador Uriarte Saga"
+date: "01/12/21"
+output: html_document
+---
+#FORO 1 -Análisis de Correlación
+
+![](endes.PNG) ![](INEI.jpeg) 
+
+#1. Definición del data frame
+Datos extraidos de la "Encuesta Demográfica y de Salud Familiar"" - ENDES(2019).Realizada por el Instituto Nacional de Estadística e Informática (INEI) cuya población objetivo está basado principalmente en los índices del peso y talla de la población de mujeres del departamento de Huancavelica en la zona Rural de 15 a 49 años de edad.
+
+```{r lectura,echo=TRUE}
+
+library(readxl)
+datos <- read_xlsx("HuancavelicaRural.xlsx")
+head(as.data.frame(datos[,2:3]),30)
+```
+
+#2. Correlacion utilizando formula
+
+$$r=\hat{\rho}=\frac{\sum_{i=1}^{n}(x_{i}-\bar{x})(y_{i}-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_{i}-\bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_{i}-\bar{y})^2}}$$
+```{r}
+attach(datos)
+x <- Talla
+y <- Peso
+xbar <- mean(x)
+ybar <- mean(y)
+
+cor1 <- (sum((x-xbar)*(y-ybar)))/(sqrt(sum((x-xbar)^2))*sqrt(sum((y-ybar)^2)))
+cor1
+```
+
+#3  Correlación utilizando el comando cor
+
+```{r}
+cor(x,y)
+```
+#4 Interpretación
+Se puede afirmar que hay una correlacion moderada positiva (**0.4661044**) entre las variables pesos y talla .
+
+#5 Graficas de Correlacion PESO-TALLA
+```{r}
+plot(Talla ~ Peso,main="Diagrama de Dispersion Y correlación entre las variables Talla-Peso",xlab='Peso',ylab='Talla')
+
+abline(lm(Talla ~ Peso),col="red")
+```
+
